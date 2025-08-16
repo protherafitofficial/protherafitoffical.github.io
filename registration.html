@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ProtheraFit Registration</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    :root {
+      --prothera-gold: #c78500;
+      --prothera-light: #fffaf0;
+      --prothera-dark: #1a1a1a;
+    }
+    body {
+      background: linear-gradient(135deg, #fffdf5 0%, #fff5e6 100%);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+    .form-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+    .form-header {
+      background: linear-gradient(135deg, var(--prothera-gold) 0%, #e0a800 100%);
+      color: white;
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .form-header::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+    .form-header::after {
+      content: "";
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+    .form-body { padding: 2.5rem; }
+    .form-section { margin-bottom: 2rem; position: relative; }
+    .section-title {
+      font-weight: 600;
+      color: var(--prothera-gold);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--prothera-gold);
+      border-radius: 3px;
+    }
+    .form-floating label { font-weight: 500; color: #555; }
+    .form-control, .form-select {
+      border-radius: 10px;
+      padding: 16px 20px;
+      border: 2px solid #eee;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--prothera-gold);
+      box-shadow: 0 0 0 4px rgba(199, 133, 0, 0.15);
+    }
+    .btn-prothera {
+      background: linear-gradient(135deg, var(--prothera-gold) 0%, #e0a800 100%);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    .btn-prothera:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(199, 133, 0, 0.2);
+      color: white;
+    }
+    .form-check-input {
+      width: 1.2em; height: 1.2em; margin-top: 0.1em;
+    }
+    .form-check-input:checked { background-color: var(--prothera-gold); border-color: var(--prothera-gold); }
+    .referral-options .form-check {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+      border: 1px solid #eee;
+    }
+    .referral-options .form-check:hover {
+      border-color: var(--prothera-gold);
+      background: rgba(199, 133, 0, 0.05);
+    }
+    .referral-options .form-check-label { font-weight: 500; }
+
+    /* Payment Section Styles */
+    .payment-section {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid rgba(199, 133, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+    .payment-header { display: flex; align-items: center; margin-bottom: 1.5rem; }
+    .payment-icon {
+      background: rgba(199, 133, 0, 0.1);
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-right: 15px; color: var(--prothera-gold);
+    }
+    .qr-code-container { text-align: center; margin: 1.5rem 0; padding: 15px; background: white; border-radius: 10px; border: 1px solid #eee; }
+    .qr-code { max-width: 200px; margin: 0 auto; display: block; }
+    .payment-instructions {
+      background: rgba(199, 133, 0, 0.05);
+      border-left: 3px solid var(--prothera-gold);
+      padding: 12px 15px; border-radius: 0 8px 8px 0; margin: 1.5rem 0;
+    }
+    .payment-instructions p { margin-bottom: 0.5rem; }
+
+    @media (max-width: 768px) {
+      .form-container { margin: 1rem; border-radius: 15px; }
+      .form-header, .form-body { padding: 1.5rem; }
+      .form-control, .form-select { padding: 14px 16px; }
+      .qr-code { max-width: 150px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <!-- Form Header -->
+      <div class="form-header">
+        <h2><i class="fas fa-user-graduate me-2"></i> ProtheraFit Registration</h2>
+        <p class="mb-0">Join our professional community today</p>
+      </div>
+
+      <!-- Form Body -->
+      <div class="form-body">
+        <form id="protheraRegistration" novalidate>
+          <!-- Personal Information Section -->
+          <div class="form-section">
+            <h5 class="section-title">Personal Information</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" required>
+                  <label for="fullName">Full Name <span class="text-danger">*</span></label>
+                  <div class="invalid-feedback">Please enter your full name</div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required>
+                  <label for="email">Email Address <span class="text-danger">*</span></label>
+                  <div class="invalid-feedback">Please enter a valid email</div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone/WhatsApp" required>
+                  <label for="phone">Phone/WhatsApp <span class="text-danger">*</span></label>
+                  <div class="invalid-feedback">Please enter your phone number</div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="location" name="location" placeholder="City, State" required>
+                  <label for="location">City, State <span class="text-danger">*</span></label>
+                  <div class="invalid-feedback">Please enter your location</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education Information Section -->
+          <div class="form-section">
+            <h5 class="section-title">Education Information</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <select class="form-select" id="qualification" name="qualification" required>
+                    <option value="" selected disabled></option>
+                    <option value="12th Pass">12th Pass</option>
+                    <option value="BPT Year 1">BPT Year 1</option>
+                    <option value="BPT Year 2">BPT Year 2</option>
+                    <option value="BPT Year 3">BPT Year 3</option>
+                    <option value="BPT Year 4">BPT Year 4</option>
+                    <option value="Intern">Intern</option>
+                    <option value="Fresh Graduate">Fresh Graduate</option>
+                  </select>
+                  <label for="qualification">Highest Qualification <span class="text-danger">*</span></label>
+                  <div class="invalid-feedback">Please select your qualification</div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <select class="form-select" id="currentStage" name="currentStage" required>
+                    <option value="" selected disabled></option>
+                    <option value="BPT Year 1">BPT Year 1</option>
+                    <option value="BPT Year 2">BPT Year 2</option>
+                    <option value="BPT Year 3">BPT Year 3</option>
+                    <option value="BPT Year 4">BPT Year 4</option>
+                    <option value="Intern">Intern</option>
+                    <option value="Graduate / Young Professional">Graduate / Young Professional</option>
+                  </select>
+                  <label for="currentStage">Current Stage <span class="text-danger">*</span></label>
+                  <div class="invalid-feedback">Please select your current stage</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Referral Source Section -->
+          <div class="form-section">
+            <h5 class="section-title">How did you hear about us?</h5>
+            <div class="referral-options">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="referral" id="instagram" value="Instagram">
+                <label class="form-check-label" for="instagram">
+                  <i class="fab fa-instagram me-2"></i> Instagram
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="referral" id="whatsapp" value="WhatsApp">
+                <label class="form-check-label" for="whatsapp">
+                  <i class="fab fa-whatsapp me-2"></i> WhatsApp
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="referral" id="friend" value="Friend">
+                <label class="form-check-label" for="friend">
+                  <i class="fas fa-user-friends me-2"></i> Friend
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="referral" id="other" value="Other">
+                <label class="form-check-label" for="other">
+                  <i class="fas fa-ellipsis-h me-2"></i> Other
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Section -->
+          <div class="form-section payment-section">
+            <div class="payment-header">
+              <div class="payment-icon">
+                <i class="fas fa-rupee-sign"></i>
+              </div>
+              <h5 class="section-title mb-0">Payment Details</h5>
+            </div>
+
+            <div class="payment-instructions">
+              <p><strong>Registration Fee:</strong> ₹499</p>
+              <p>Please scan the QR code below to make payment via UPI</p>
+            </div>
+
+            <div class="qr-code-container">
+              <img src="images/qr.jpg" alt="Payment QR Code" class="qr-code img-fluid">
+              <p class="mt-2 text-muted">Scan to pay via UPI</p>
+              <p class="mt-2 text-muted"><b>OR</b></p>
+              <p class="mt-2 text-muted">Enter this Transaction ID : 8838631787@axl</p>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="transactionId" name="transactionId" placeholder="Transaction ID" required>
+              <label for="transactionId">Transaction ID <span class="text-danger">*</span></label>
+              <div class="invalid-feedback">Please enter your payment transaction ID</div>
+              <small class="text-muted">Enter your UPI transaction reference number</small>
+            </div>
+          </div>
+
+          <!-- Consent Section -->
+          <div class="form-section">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="consent" name="consent" required>
+              <label class="form-check-label" for="consent">
+                I agree to receive updates & session details from ProtheraFit
+              </label>
+              <div class="invalid-feedback">You must agree to continue</div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-section">
+            <button class="btn btn-prothera" type="submit" id="submitBtn">
+              <i class="fas fa-paper-plane me-2"></i> Complete Registration
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Firebase SDK -->
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+  import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js";
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwIBUCercuAN8DNeTd_CpDbeFOQNH_7rw",
+    authDomain: "protherafit-registration.firebaseapp.com",
+    databaseURL: "https://protherafit-registration-default-rtdb.firebaseio.com",
+    projectId: "protherafit-registration",
+    storageBucket: "protherafit-registration.firebasestorage.app",
+    messagingSenderId: "915333620797",
+    appId: "1:915333620797:web:4a18c1f11749d2f75a7654",
+    measurementId: "G-4FZ5WVB1PW"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const database = getDatabase(app);
+
+  // Function to get current IST time in 12-hour format
+  function getIndianTime12Hour() {
+    const now = new Date();
+    const options = {
+      timeZone: 'Asia/Kolkata',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    };
+    return now.toLocaleString('en-IN', options) + ' IST';
+  }
+
+  // Form submission handler
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('protheraRegistration');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      // Validate form
+      if (form.checkValidity()) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+        
+        // Get form values
+        const formData = {
+          fullName: document.getElementById('fullName').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          location: document.getElementById('location').value,
+          qualification: document.getElementById('qualification').value,
+          currentStage: document.getElementById('currentStage').value,
+          referral: document.querySelector('input[name="referral"]:checked').value,
+          transactionId: document.getElementById('transactionId').value,
+          consent: document.getElementById('consent').checked,
+          timestamp: getIndianTime12Hour() // Using Indian time in 12-hour format
+        };
+
+        // Save to Firebase
+        const registrationsRef = ref(database, 'registrations');
+        const newRegistrationRef = push(registrationsRef);
+        
+        set(newRegistrationRef, formData)
+          .then(() => {
+            // Success message
+            Swal.fire({
+              title: 'Registration Successful!',
+              text: 'Thank you for registering with ProtheraFit. We will contact you soon.',
+              icon: 'success',
+              confirmButtonColor: '#c78500'
+            });
+            
+            // Reset form
+            form.reset();
+            form.classList.remove('was-validated');
+          })
+          .catch((error) => {
+            console.error('Error saving data:', error);
+            Swal.fire({
+              title: 'Error!',
+              text: 'There was an error submitting your registration. Please try again.',
+              icon: 'error',
+              confirmButtonColor: '#c78500'
+            });
+          })
+          .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i> Complete Registration';
+          });
+      } else {
+        form.classList.add('was-validated');
+      }
+    });
+  });
+</script>
+</body>
+</html>
