@@ -1492,14 +1492,24 @@
        }
      });
 
-                       // Check if it's Sunday and within offer hours (12:00 AM - 12:00 PM)
+                       // Check if it's Sunday and within offer hours (12:00 AM - 11:30 PM)
        function isSundayOfferActive() {
          const now = new Date();
          const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
          const hour = now.getHours();
+         const minutes = now.getMinutes();
          
-         // Check if it's Sunday (0) and between 12:00 AM (0) and 12:00 PM (12)
-         return dayOfWeek === 0 && hour >= 0 && hour < 12;
+         // Check if it's Sunday (0) and between 12:00 AM (0:00) and 11:30 PM (23:30)
+         if (dayOfWeek === 0) {
+           if (hour === 23) {
+             // If it's 11 PM, check if minutes are 30 or less
+             return minutes <= 30;
+           } else if (hour >= 0 && hour < 23) {
+             // Any other hour between 12 AM and 10 PM
+             return true;
+           }
+         }
+         return false;
        }
        
        // Handle Sunday registration button click
@@ -1511,8 +1521,8 @@
            // If it's Sunday during offer hours, redirect to registration
            window.location.href = 'registration.html';
          } else {
-           // If it's not Sunday, show message
-           messageElement.textContent = 'The offer is only available on Sunday (12:00 AM - 12:00 PM)';
+                       // If it's not Sunday, show message
+            messageElement.textContent = 'The offer is only available on Sunday (24 Aug)';
            messageElement.style.color = '#dc3545';
            messageElement.style.fontWeight = 'bold';
            
