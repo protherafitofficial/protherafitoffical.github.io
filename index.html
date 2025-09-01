@@ -764,21 +764,22 @@
 
 
 
- <!-- Fixed Floating Sunday Offer Button -->
+ <!-- Fixed Floating Sunday Offer Button
  <div class="sunday-offer-popup">
    <button class="sunday-offer-btn" onclick="openSundayModal()">
      <i class="fas fa-percentage"></i>
    </button>
- </div>
+ </div> -->
 
 <!-- Sunday Offer Modal -->
-<div id="sundayModal" class="sunday-modal">
+
+<!-- <div id="sundayModal" class="sunday-modal">
   <div class="sunday-modal-content">
     <button class="sunday-modal-close" onclick="closeSundayModal()">
       <i class="fas fa-times"></i>
     </button>
     
-                   <div class="sunday-modal-header">
+      <div class="sunday-modal-header">
        <div class="d-flex justify-content-between align-items-center">
          <div class="d-flex align-items-center">
            <img src="images/protherafit.png" alt="ProtheraFit Logo" style="height: 40px; margin-right: 12px;">
@@ -793,30 +794,23 @@
      </div>
      
      <div class="sunday-modal-body">
-       <!-- Two Column Layout -->
        <div class="row align-items-center">
-         <!-- Left Column - Woman with Laptop Image -->
          <div class="col-lg-5 col-md-12 mb-4 mb-lg-0 text-center">
            <img src="images/meeting.png" alt="Physiotherapy Professional Learning" class="img-fluid rounded-3 shadow" style="max-width: 100%; height: auto; max-height: 420px; object-fit: cover;">
          </div>
          
-         <!-- Right Column - Content -->
          <div class="col-lg-7 col-md-12">
-           <!-- Main Headline -->
            <h3 class="fw-bold mb-3" style="color: #0b0b0b; line-height: 1.1; font-size: 2rem;">
              YOUR PHYSIO CAREER,<br>
              YOUR EDGE
            </h3>
      
-           <!-- Tagline -->
            <p class="text-secondary mb-3" style="font-size: 1rem;">Learn what textbooks don't teach</p>
            
-           <!-- Limited Sunday Offer Banner -->
            <div class="bg-danger text-white text-center py-2 px-3 rounded-3 mb-3">
              <h6 class="mb-0 fw-bold" style="font-size: 0.9rem;">LIMITED SUNDAY OFFER</h6>
            </div>
            
-           <!-- Sunday Special Details -->
            <div class="p-3 rounded-3 mb-3" style="background: #ffc107;">
              <div class="text-center">
                <h5 class="fw-bold mb-1" style="color: #0b0b0b; font-size: 1.1rem;">Sunday Special: ₹99 Only</h5>
@@ -825,7 +819,6 @@
              </div>
            </div>
            
-           <!-- Program Details -->
            <div class="mb-3">
              <h6 class="fw-bold mb-2" style="color: #0b0b0b; font-size: 1rem;">Untaught Program:</h6>
              <ul class="list-unstyled">
@@ -835,7 +828,6 @@
              </ul>
            </div>
            
-           <!-- Call to Action -->
            <div class="text-center">
              <button class="btn btn-light btn-lg px-4 py-2 fw-bold rounded-pill shadow" onclick="handleSundayRegistration()" style="background: white; color: #0b0b0b; border: 2px solid #ffc107; font-size: 1rem;">
                Register with Offer
@@ -846,7 +838,7 @@
        </div>
      </div>
   </div>
-</div>
+</div> -->
 
 <!-- OUR CORE HIGHLIGHTS Section (Full Screen) -->
 <section class="core-highlights d-flex align-items-center">
@@ -1313,35 +1305,41 @@
       <div class="col-lg-6 fade-in">
         <div class="contact-form-box p-4">
           <h4 class="fw-bold mb-4">Get in Touch</h4>
-          <form>
+          <form id="contactForm" onsubmit="sendEmail(event)">
             <div class="row g-3">
               <div class="col-md-6">
                 <label class="form-label">Name</label>
-                <input type="text" class="form-control" placeholder="Your Name">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="you@example.com">
+                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Inquiry Type</label>
-                <select class="form-select">
-                  <option>Program</option>
-                  <option>Corporate</option>
-                  <option>Event</option>
+                <select class="form-select" id="inquiryType" name="inquiryType" required>
+                  <option value="">Select Inquiry Type</option>
+                  <option value="Program">Program</option>
+                  <option value="Corporate">Corporate</option>
+                  <option value="Event">Event</option>
                 </select>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" placeholder="Your Phone">
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Your Phone" required>
               </div>
               <div class="col-12">
                 <label class="form-label">Message</label>
-                <textarea rows="4" class="form-control" placeholder="Your message"></textarea>
+                <textarea rows="4" class="form-control" id="message" name="message" placeholder="Your message" required></textarea>
               </div>
             </div>
+            
+            
+            
             <div class="mt-4">
-              <button type="submit" class="btn btn-gold px-4 py-2">Send Message</button>
+              <button type="submit" class="btn btn-gold px-4 py-2">
+                Send Message
+              </button>
             </div>
           </form>
         </div>
@@ -1362,6 +1360,8 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 
 <script>
     // Shrink Navbar on Scroll
@@ -1465,97 +1465,136 @@
        });
      });
 
-     // Sunday Offer Modal Functions
-     function openSundayModal() {
-       const modal = document.getElementById('sundayModal');
-       modal.classList.add('show');
-       document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    // // Sunday Offer Modal Functions
+    // function openSundayModal() {
+    //   const modal = document.getElementById('sundayModal');
+    //   modal.classList.add('show');
+    //   document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    // }
+//
+    // function closeSundayModal() {
+    //   const modal = document.getElementById('sundayModal');
+    //   modal.classList.remove('show');
+    //   document.body.style.overflow = ''; // Restore scrolling
+    // }
+//
+    // // Close modal when clicking outside
+    // document.getElementById('sundayModal').addEventListener('click', function(e) {
+    //   if (e.target === this) {
+    //     closeSundayModal();
+    //   }
+    // });
+//
+    // // Close modal with Escape key
+    // document.addEventListener('keydown', function(e) {
+    //   if (e.key === 'Escape') {
+    //     closeSundayModal();
+    //   }
+    // });
+//
+    //                   // Check if it's Sunday and within offer hours (12:00 AM - 11:30 PM)
+    //   function isSundayOfferActive() {
+    //     const now = new Date();
+    //     const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    //     const hour = now.getHours();
+    //     const minutes = now.getMinutes();
+    //     
+    //     // Check if it's Sunday (0) and between 12:00 AM (0:00) and 11:30 PM (23:30)
+    //     if (dayOfWeek === 0) {
+    //       if (hour === 23) {
+    //         // If it's 11 PM, check if minutes are 30 or less
+    //         return minutes <= 30;
+    //       } else if (hour >= 0 && hour < 23) {
+    //         // Any other hour between 12 AM and 10 PM
+    //         return true;
+    //       }
+    //     }
+    //     return false;
+    //   }
+    //   
+    //   // Handle Sunday registration button click
+    //   function handleSundayRegistration() {
+    //     const isActive = isSundayOfferActive();
+    //     const messageElement = document.getElementById('registrationMessage');
+    //     
+    //     if (isActive) {
+    //       // If it's Sunday during offer hours, redirect to registration
+    //       window.location.href = 'registration.html';
+    //     } else {
+    //                   // If it's not Sunday, show message
+    //        messageElement.textContent = 'The offer is only available on Sunday (24 Aug)';
+    //       messageElement.style.color = '#dc3545';
+    //       messageElement.style.fontWeight = 'bold';
+    //       
+    //       // Clear message after 3 seconds
+    //       setTimeout(() => {
+    //         messageElement.textContent = '';
+    //       }, 3000);
+    //     }
+    //   }
+    //   
+    //   // Show Sunday offer button every day (always visible)
+    //   function updateSundayOfferVisibility() {
+    //     const sundayButton = document.querySelector('.sunday-offer-popup');
+    //     
+    //     if (sundayButton) {
+    //       sundayButton.style.display = 'block';
+    //       sundayButton.style.animation = 'bounce 2s infinite';
+    //     }
+    //   }
+    //  
+    //  // Update offer visibility on page load
+    //  document.addEventListener('DOMContentLoaded', function() {
+    //    updateSundayOfferVisibility();
+    //    
+    //    // Check every minute if the offer should be shown/hidden
+    //    setInterval(updateSundayOfferVisibility, 60000);
+    //  });
+    //  
+         //  // Auto-show modal after 5 seconds (optional)
+     //  setTimeout(function() {
+     //    // Uncomment the line below if you want the modal to auto-show
+     //    // openSundayModal();
+     //  }, 5000);
+
+     // Contact Form Email Function
+     function sendEmail(e) {
+         e.preventDefault();
+         
+         // Get form values
+         const name = document.getElementById('name').value.trim();
+         const email = document.getElementById('email').value.trim();
+         const inquiryType = document.getElementById('inquiryType').value;
+         const phone = document.getElementById('phone').value.trim();
+         const message = document.getElementById('message').value.trim();
+         
+         // Validate form
+         if (!name || !email || !inquiryType || !phone || !message) {
+             alert('Please fill in all fields.');
+             return;
+         }
+         
+         // Format email body exactly as requested
+         const emailBody = `Name : ${name}
+Inquiry type : ${inquiryType}
+Phone number : ${phone}
+
+${message}`;
+         
+         // Create mailto link
+         const mailtoLink = `mailto:protherafitofficial@gmail.com?subject=New Contact Form Submission - ${inquiryType}&body=${encodeURIComponent(emailBody)}`;
+         
+         // Open email client
+         window.location.href = mailtoLink;
+         
+         // Reset form
+         document.getElementById('contactForm').reset();
+         
+         // Show success message
+         alert('Email client opened! Please send the email to complete your message.');
      }
 
-     function closeSundayModal() {
-       const modal = document.getElementById('sundayModal');
-       modal.classList.remove('show');
-       document.body.style.overflow = ''; // Restore scrolling
-     }
-
-     // Close modal when clicking outside
-     document.getElementById('sundayModal').addEventListener('click', function(e) {
-       if (e.target === this) {
-         closeSundayModal();
-       }
-     });
-
-     // Close modal with Escape key
-     document.addEventListener('keydown', function(e) {
-       if (e.key === 'Escape') {
-         closeSundayModal();
-       }
-     });
-
-                       // Check if it's Sunday and within offer hours (12:00 AM - 11:30 PM)
-       function isSundayOfferActive() {
-         const now = new Date();
-         const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
-         const hour = now.getHours();
-         const minutes = now.getMinutes();
-         
-         // Check if it's Sunday (0) and between 12:00 AM (0:00) and 11:30 PM (23:30)
-         if (dayOfWeek === 0) {
-           if (hour === 23) {
-             // If it's 11 PM, check if minutes are 30 or less
-             return minutes <= 30;
-           } else if (hour >= 0 && hour < 23) {
-             // Any other hour between 12 AM and 10 PM
-             return true;
-           }
-         }
-         return false;
-       }
-       
-       // Handle Sunday registration button click
-       function handleSundayRegistration() {
-         const isActive = isSundayOfferActive();
-         const messageElement = document.getElementById('registrationMessage');
-         
-         if (isActive) {
-           // If it's Sunday during offer hours, redirect to registration
-           window.location.href = 'registration.html';
-         } else {
-                       // If it's not Sunday, show message
-            messageElement.textContent = 'The offer is only available on Sunday (24 Aug)';
-           messageElement.style.color = '#dc3545';
-           messageElement.style.fontWeight = 'bold';
-           
-           // Clear message after 3 seconds
-           setTimeout(() => {
-             messageElement.textContent = '';
-           }, 3000);
-         }
-       }
-       
-       // Show Sunday offer button every day (always visible)
-       function updateSundayOfferVisibility() {
-         const sundayButton = document.querySelector('.sunday-offer-popup');
-         
-         if (sundayButton) {
-           sundayButton.style.display = 'block';
-           sundayButton.style.animation = 'bounce 2s infinite';
-         }
-       }
-      
-      // Update offer visibility on page load
-      document.addEventListener('DOMContentLoaded', function() {
-        updateSundayOfferVisibility();
-        
-        // Check every minute if the offer should be shown/hidden
-        setInterval(updateSundayOfferVisibility, 60000);
-      });
-      
-      // Auto-show modal after 5 seconds (optional)
-      setTimeout(function() {
-        // Uncomment the line below if you want the modal to auto-show
-        // openSundayModal();
-      }, 5000);
+     
 
 </script>
 
