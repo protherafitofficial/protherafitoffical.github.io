@@ -372,38 +372,32 @@
     return now.toLocaleString('en-IN', options) + ' IST';
   }
 
-  // //Check if it's Sunday and within offer hours (12:00 AM - 12:00 PM)
-  //function isSundayOfferActive() {
-  //  const now = new Date();
-  //  const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
-  //  const hour = now.getHours();
-  //  
-  //  // Check if it's Sunday (0) and between 12:00 AM (0) and 12:00 PM (12)
-  //  return dayOfWeek === 0 && hour >= 0 && hour < 12;
-  //}
-//
-  // //Update pricing display based on Sunday offer
-  //function updatePricingDisplay() {
-  //  const registrationFee = document.getElementById('registrationFee');
-  //  const sundayOfferText = document.getElementById('sundayOfferText');
-  //  const isActive = isSundayOfferActive();
-  //  
-  //  if (isActive) {
-  //    registrationFee.innerHTML = '<span class="text-decoration-line-through">₹499</span> <span class="fw-bold text-danger fs-5">₹99</span>';
-  //    sundayOfferText.style.display = 'block';
-  //  } else {
-  //    registrationFee.textContent = '₹499';
-  //    sundayOfferText.style.display = 'none';
-  //  }
-  //}
+  // Registration pricing window: Oct 15 (00:00) to Nov 1 (23:59:59)
+  function isWithinRegistrationWindow() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const start = new Date(year, 9, 15, 0, 0, 0, 0); // Oct is 9
+    const end = new Date(year, 10, 1, 23, 59, 59, 999); // Nov is 10
+    return now >= start && now <= end;
+  }
+
+  function updateRegistrationPricing() {
+    const registrationFee = document.getElementById('registrationFee');
+    if (!registrationFee) return;
+    if (isWithinRegistrationWindow()) {
+      registrationFee.innerHTML = '<span class="text-decoration-line-through">₹499</span> <span class="fw-bold text-danger">₹299</span>';
+    } else {
+      registrationFee.textContent = '₹499';
+    }
+  }
 
   // Form submission handler
   document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('protheraRegistration');
     const submitBtn = document.getElementById('submitBtn');
 
-    // Update pricing on page load
-    // updatePricingDisplay();
+    // Update pricing based on registration window
+    updateRegistrationPricing();
 
     form.addEventListener('submit', function(event) {
       event.preventDefault();
@@ -411,6 +405,18 @@
       
       // Validate form
       if (form.checkValidity()) {
+        // Ensure a referral option is selected to avoid null access
+        const selectedReferralEl = document.querySelector('input[name="referral"]:checked');
+        if (!selectedReferralEl) {
+          Swal.fire({
+            title: 'Missing selection',
+            text: 'Please select how you heard about us.',
+            icon: 'warning',
+            confirmButtonColor: '#c78500'
+          });
+          form.classList.add('was-validated');
+          return;
+        }
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
         
@@ -422,7 +428,7 @@
           location: document.getElementById('location').value,
           qualification: document.getElementById('qualification').value,
           currentStage: document.getElementById('currentStage').value,
-          referral: document.querySelector('input[name="referral"]:checked').value,
+          referral: selectedReferralEl.value,
           transactionId: document.getElementById('transactionId').value,
           consent: document.getElementById('consent').checked,
           timestamp: getIndianTime12Hour() // Using Indian time in 12-hour format

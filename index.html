@@ -724,7 +724,7 @@
       <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
       <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
       <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-      <li class="nav-item mt-2"><a class="btn register-btn w-100" href="#">Register</a></li>
+      <li class="nav-item mt-2"><a class="btn register-btn w-100" href="registration.html">Register</a></li>
     </ul>
   </div>
 </div>
@@ -764,16 +764,17 @@
 
 
 
- <!-- Fixed Floating Sunday Offer Button
+ <!-- Fixed Floating Sunday Offer Button -->
+
  <div class="sunday-offer-popup">
    <button class="sunday-offer-btn" onclick="openSundayModal()">
      <i class="fas fa-percentage"></i>
    </button>
- </div> -->
+ </div>
 
 <!-- Sunday Offer Modal -->
 
-<!-- <div id="sundayModal" class="sunday-modal">
+<div id="sundayModal" class="sunday-modal">
   <div class="sunday-modal-content">
     <button class="sunday-modal-close" onclick="closeSundayModal()">
       <i class="fas fa-times"></i>
@@ -808,13 +809,13 @@
            <p class="text-secondary mb-3" style="font-size: 1rem;">Learn what textbooks don't teach</p>
            
            <div class="bg-danger text-white text-center py-2 px-3 rounded-3 mb-3">
-             <h6 class="mb-0 fw-bold" style="font-size: 0.9rem;">LIMITED SUNDAY OFFER</h6>
+             <h6 class="mb-0 fw-bold" style="font-size: 0.9rem;">NOVEMBER MONTH OFFER</h6>
            </div>
            
            <div class="p-3 rounded-3 mb-3" style="background: #ffc107;">
              <div class="text-center">
-               <h5 class="fw-bold mb-1" style="color: #0b0b0b; font-size: 1.1rem;">Sunday Special: ₹99 Only</h5>
-               <p class="mb-1 fw-bold" style="color: #0b0b0b; font-size: 0.9rem;">(24th Aug)</p>
+               <h5 class="fw-bold mb-1" style="color: #0b0b0b; font-size: 1.1rem;">November Special: ₹299 Only</h5>
+               <p class="mb-1 fw-bold" style="color: #0b0b0b; font-size: 0.9rem;">Registration Opens: October 15 - 1st November</p>
                <p class="mb-0" style="color: #0b0b0b; font-size: 0.9rem;">Original Fee: <span class="text-decoration-line-through">₹499</span></p>
              </div>
            </div>
@@ -838,7 +839,7 @@
        </div>
      </div>
   </div>
-</div> -->
+</div>
 
 <!-- OUR CORE HIGHLIGHTS Section (Full Screen) -->
 <section class="core-highlights d-flex align-items-center">
@@ -1465,97 +1466,64 @@
        });
      });
 
-    // // Sunday Offer Modal Functions
-    // function openSundayModal() {
-    //   const modal = document.getElementById('sundayModal');
-    //   modal.classList.add('show');
-    //   document.body.style.overflow = 'hidden'; // Prevent background scrolling
-    // }
-//
-    // function closeSundayModal() {
-    //   const modal = document.getElementById('sundayModal');
-    //   modal.classList.remove('show');
-    //   document.body.style.overflow = ''; // Restore scrolling
-    // }
-//
-    // // Close modal when clicking outside
-    // document.getElementById('sundayModal').addEventListener('click', function(e) {
-    //   if (e.target === this) {
-    //     closeSundayModal();
-    //   }
-    // });
-//
-    // // Close modal with Escape key
-    // document.addEventListener('keydown', function(e) {
-    //   if (e.key === 'Escape') {
-    //     closeSundayModal();
-    //   }
-    // });
-//
-    //                   // Check if it's Sunday and within offer hours (12:00 AM - 11:30 PM)
-    //   function isSundayOfferActive() {
-    //     const now = new Date();
-    //     const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
-    //     const hour = now.getHours();
-    //     const minutes = now.getMinutes();
-    //     
-    //     // Check if it's Sunday (0) and between 12:00 AM (0:00) and 11:30 PM (23:30)
-    //     if (dayOfWeek === 0) {
-    //       if (hour === 23) {
-    //         // If it's 11 PM, check if minutes are 30 or less
-    //         return minutes <= 30;
-    //       } else if (hour >= 0 && hour < 23) {
-    //         // Any other hour between 12 AM and 10 PM
-    //         return true;
-    //       }
-    //     }
-    //     return false;
-    //   }
-    //   
-    //   // Handle Sunday registration button click
-    //   function handleSundayRegistration() {
-    //     const isActive = isSundayOfferActive();
-    //     const messageElement = document.getElementById('registrationMessage');
-    //     
-    //     if (isActive) {
-    //       // If it's Sunday during offer hours, redirect to registration
-    //       window.location.href = 'registration.html';
-    //     } else {
-    //                   // If it's not Sunday, show message
-    //        messageElement.textContent = 'The offer is only available on Sunday (24 Aug)';
-    //       messageElement.style.color = '#dc3545';
-    //       messageElement.style.fontWeight = 'bold';
-    //       
-    //       // Clear message after 3 seconds
-    //       setTimeout(() => {
-    //         messageElement.textContent = '';
-    //       }, 3000);
-    //     }
-    //   }
-    //   
-    //   // Show Sunday offer button every day (always visible)
-    //   function updateSundayOfferVisibility() {
-    //     const sundayButton = document.querySelector('.sunday-offer-popup');
-    //     
-    //     if (sundayButton) {
-    //       sundayButton.style.display = 'block';
-    //       sundayButton.style.animation = 'bounce 2s infinite';
-    //     }
-    //   }
-    //  
-    //  // Update offer visibility on page load
-    //  document.addEventListener('DOMContentLoaded', function() {
-    //    updateSundayOfferVisibility();
-    //    
-    //    // Check every minute if the offer should be shown/hidden
-    //    setInterval(updateSundayOfferVisibility, 60000);
-    //  });
-    //  
-         //  // Auto-show modal after 5 seconds (optional)
-     //  setTimeout(function() {
-     //    // Uncomment the line below if you want the modal to auto-show
-     //    // openSundayModal();
-     //  }, 5000);
+    // Sunday Offer Modal Functions
+    function openSundayModal() {
+      const modal = document.getElementById('sundayModal');
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeSundayModal() {
+      const modal = document.getElementById('sundayModal');
+      modal.classList.remove('show');
+      document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('sundayModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeSundayModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeSundayModal();
+      }
+    });
+
+      // Registration window: Oct 15 (00:00) to Nov 1 (23:59:59) local time
+      function isWithinRegistrationWindow() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const start = new Date(year, 9, 15, 0, 0, 0, 0); // Oct is 9
+        const end = new Date(year, 10, 1, 23, 59, 59, 999); // Nov is 10
+        return now >= start && now <= end;
+      }
+
+      // Handle registration button click with date gating and 4s message
+      function handleSundayRegistration() {
+        const messageElement = document.getElementById('registrationMessage');
+        if (isWithinRegistrationWindow()) {
+          window.location.href = 'registration.html';
+          return;
+        }
+        if (messageElement) {
+          messageElement.textContent = 'Registration is open from Oct 15 to Nov 1';
+          messageElement.style.color = '#dc3545';
+          messageElement.style.fontWeight = 'bold';
+          setTimeout(() => {
+            messageElement.textContent = '';
+          }, 4000);
+        }
+      }
+     
+          // Auto-show modal after 5 seconds (optional)
+      setTimeout(function() {
+        // Uncomment the line below if you want the modal to auto-show
+        // openSundayModal();
+      }, 5000);
 
      // Contact Form Email Function
      function sendEmail(e) {
