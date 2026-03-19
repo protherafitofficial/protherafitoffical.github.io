@@ -809,21 +809,22 @@
            <p class="text-secondary mb-3" style="font-size: 1rem;">Learn what textbooks don't teach</p>
            
            <div class="bg-danger text-white text-center py-2 px-3 rounded-3 mb-3">
-             <h6 class="mb-0 fw-bold" style="font-size: 0.9rem;">NOVEMBER MONTH OFFER</h6>
+             <h6 class="mb-0 fw-bold" style="font-size: 0.9rem;">APRIL MONTH OFFER</h6>
            </div>
            
            <div class="p-3 rounded-3 mb-3" style="background: #ffc107;">
              <div class="text-center">
-               <h5 class="fw-bold mb-1" style="color: #0b0b0b; font-size: 1.1rem;">November Special: ₹299 Only</h5>
-               <p class="mb-1 fw-bold" style="color: #0b0b0b; font-size: 0.9rem;">Registration Opens: October 15 - November 1</p>
-               <p class="mb-0" style="color: #0b0b0b; font-size: 0.9rem;">Original Fee: <span class="text-decoration-line-through">₹499</span></p>
+               <h5 class="fw-bold mb-1" style="color: #0b0b0b; font-size: 1.1rem;">Summer Special: ₹299 Only</h5>
+               <p class="mb-1 fw-bold" style="color: #0b0b0b; font-size: 0.9rem;">Registration Opens: March 20 - April 1</p>
+               <p class="mb-0" style="color: #0b0b0b; font-size: 0.9rem;">(Limited Time offer for Summer Special)</p>
+               <p class="mb-0" style="color: #0b0b0b; font-size: 0.9rem;">Regular Fee: ₹499</p>
              </div>
            </div>
            
            <div class="mb-3">
-             <h6 class="fw-bold mb-2" style="color: #0b0b0b; font-size: 1rem;">Untaught Program:</h6>
+             <h6 class="fw-bold mb-2" style="color: #0b0b0b; font-size: 1rem;">Untaught Program(Cohort 2):</h6>
              <ul class="list-unstyled">
-               <li class="mb-1"><i class="fas fa-check-circle text-gold me-2"></i>4-Week Cohort</li>
+               <li class="mb-1"><i class="fas fa-check-circle text-gold me-2"></i>4-Week Cohort(Weekend Sessions)</li>
                <li class="mb-1"><i class="fas fa-check-circle text-gold me-2"></i>Zoom + WhatsApp</li>
                <li class="mb-1"><i class="fas fa-check-circle text-gold me-2"></i>Certificate included</li>
              </ul>
@@ -1258,7 +1259,7 @@
         <div class="highlight-card">
           <i class="fas fa-calendar-alt icon text-gold"></i>
           <h5 class="fw-bold mt-3">Learning Program – “The Untaught”</h5>
-          <p>Registrations for the 2st Cohort open <strong>15th Oct – 1st Nov 2025</strong></p>
+          <p>Registrations for the 2ndCohort open <strong>20 Mar – 1st Apr 2026</strong></p>
         </div>
       </div>
       <div class="col-md-4 fade-in">
@@ -1357,6 +1358,34 @@
     </p>
   </div>
 </footer>
+
+<!-- Simple Registration Message Card -->
+<div id="registerPopup" style="
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:1050;
+  justify-content:center;
+  align-items:center;
+">
+  <div style="
+    background:white;
+    padding:25px 30px;
+    border-radius:12px;
+    text-align:center;
+    max-width:350px;
+    width:90%;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  ">
+    <h5 style="color:#c78500; font-weight:bold;">Registration Closed</h5>
+    <p style="margin:10px 0; color:#555;">
+      Registration is open only from <b>March 20 – April 1</b>
+    </p>
+    <button onclick="closeRegisterPopup()" class="btn btn-gold mt-2">OK</button>
+  </div>
+</div>
 
 
 <!-- Bootstrap JS -->
@@ -1493,26 +1522,28 @@
       }
     });
 
-      // Registration window: Oct 15 (00:00) to Nov 1 (23:59:59) local time
+      // Registration window
       function isWithinRegistrationWindow() {
         const now = new Date();
         const year = now.getFullYear();
-        const start = new Date(year, 9, 15, 0, 0, 0, 0); // Oct is 9
-        const end = new Date(year, 10, 1, 23, 59, 59, 999); // Nov is 10
+
+        const start = new Date(year, 2, 19, 0, 0, 0, 0);   // March 20
+        const end = new Date(year, 3, 1, 23, 59, 59, 999); // April 1
+
         return now >= start && now <= end;
       }
 
       // Handle registration button click with date gating and 4s message
       function handleSundayRegistration() {
         const messageElement = document.getElementById('registrationMessage');
+
         if (isWithinRegistrationWindow()) {
           window.location.href = 'registration.html';
-          return;
-        }
-        if (messageElement) {
-          messageElement.textContent = 'Registration is open from Oct 15 to Nov 1';
+        } else {
+          messageElement.textContent = 'Registration Closed';
           messageElement.style.color = '#dc3545';
           messageElement.style.fontWeight = 'bold';
+
           setTimeout(() => {
             messageElement.textContent = '';
           }, 4000);
@@ -1562,6 +1593,30 @@ ${message}`;
          alert('Email client opened! Please send the email to complete your message.');
      }
 
+     document.querySelectorAll('a[href="registration.html"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+
+          // Check registration date
+          if (!isWithinRegistrationWindow()) {
+
+            e.preventDefault(); // ❌ Stop redirect
+
+            // ✅ Show separate message card (NOT Sunday modal)
+            openRegisterPopup();
+
+          }
+
+          // ✅ If within date → normal redirect happens automatically
+        });
+      });
+
+      function openRegisterPopup() {
+        document.getElementById("registerPopup").style.display = "flex";
+      }
+
+      function closeRegisterPopup() {
+        document.getElementById("registerPopup").style.display = "none";
+      }
      
 
 </script>
