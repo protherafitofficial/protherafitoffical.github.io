@@ -149,6 +149,37 @@
     }
     .payment-instructions p { margin-bottom: 0.5rem; }
 
+    .offer-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #c78500;
+    }
+
+    .summer-offer {
+    font-size: 16px;
+    }
+
+    .offer-price {
+    color: #dc3545;
+    font-weight: bold;
+    font-size: 18px;
+    }
+
+    .offer-dates {
+    font-size: 14px;
+    color: #333;
+    }
+
+    .limited-offer {
+    font-size: 13px;
+    color: #888;
+    font-style: italic;
+    }
+
+    .regular-fee {
+    font-size: 14px;
+    }
+
     @media (max-width: 768px) {
       .form-container { margin: 1rem; border-radius: 15px; }
       .form-header, .form-body { padding: 1.5rem; }
@@ -287,9 +318,16 @@
             </div>
 
             <div class="payment-instructions">
-              <p><strong>Registration Fee:</strong> <span id="registrationFee">₹499</span></p>
-              <!-- <p id="sundayOfferText" style="display: none;"><strong>🎉 Sunday Special Offer:</strong> <span class="text-decoration-line-through">₹499</span> <span class="fw-bold text-danger fs-5">₹99</span></p> -->
-              <p>Please scan the QR code below to make payment via UPI</p>
+
+                <p class="offer-title">APRIL MONTH OFFER</p>
+
+                <p class="summer-offer"><strong>Summer Special:</strong><span class="offer-price">₹299 Only</span></p>
+                <p class="offer-dates"><strong>Registration Opens:</strong> March 20 - April 1</p>
+                <p class="limited-offer">(Limited Time Offer for Summer Special)</p>
+                <p class="regular-fee">Regular Fee: ₹499</p>
+                <hr>
+                <p>Please scan the QR code below to make payment via UPI</p>
+
             </div>
 
             <div class="qr-code-container">
@@ -398,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(() => {
       Swal.fire({
         title: 'Registration Successful!',
-        text: 'Data saved to Google Sheets.',
+        text: 'Thank You!',
         icon: 'success',
         confirmButtonColor: '#c78500'
       });
